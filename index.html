@@ -35,7 +35,7 @@
             z-index: -1;
         }
 
-        /* Falling hearts animation */
+        /* Falling hearts animation - FIXED FOR ALL PAGES */
         .hearts {
             position: fixed;
             top: 0;
@@ -43,7 +43,7 @@
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: 1;
+            z-index: 3; /* Increased z-index to be above all content */
         }
 
         .heart {
@@ -54,6 +54,7 @@
             animation: fall linear forwards;
             opacity: 0.7;
             text-shadow: 0 0 10px rgba(255, 107, 157, 0.5);
+            z-index: 3; /* Ensure hearts are above everything */
         }
 
         @keyframes fall {
@@ -75,7 +76,7 @@
             justify-content: center;
             align-items: center;
             padding: 20px;
-            z-index: 2;
+            z-index: 2; /* Lower than hearts */
             transition: all 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
         }
 
@@ -139,6 +140,657 @@
         }
 
         .btn {
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            background: white;
+            color: #1e90ff;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            font-weight: bold;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: 0.5s;
+        }
+
+        .btn:hover::after {
+            left: 100%;
+        }
+
+        /* Main page */
+        #main-page {
+            background: rgba(255, 255, 255, 0.9);
+            justify-content: flex-start;
+            padding-top: 80px;
+            backdrop-filter: blur(5px);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: slideDown 1s ease-out;
+        }
+
+        .header h2 {
+            font-family: Tahoma, sans-serif;
+            font-size: 3rem;
+            color: #1e90ff;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1.2rem;
+        }
+
+        .buttons-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            width: 90%;
+            max-width: 1000px;
+            margin-bottom: 40px;
+        }
+
+        .content-btn {
+            padding: 25px 20px;
+            background: linear-gradient(135deg, #1e90ff 0%, #87cefa 100%);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 8px 20px rgba(30, 144, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            position: relative;
+            overflow: hidden;
+            font-family: Tahoma, sans-serif;
+        }
+
+        .content-btn:hover {
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 15px 30px rgba(30, 144, 255, 0.4);
+        }
+
+        .content-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.2), transparent);
+            transform: translateX(-100%);
+        }
+
+        .content-btn:hover::before {
+            transform: translateX(100%);
+            transition: transform 0.6s;
+        }
+
+        .content-btn i {
+            font-size: 1.8rem;
+        }
+
+        /* Content sections */
+        .content-section {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            z-index: 4; /* Lower than hearts but higher than main pages */
+            padding: 30px;
+            overflow-y: auto;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .content-section.active {
+            display: block;
+            opacity: 1;
+            animation: fadeInUp 0.5s ease-out;
+        }
+
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e6f7ff;
+        }
+
+        .content-header h3 {
+            font-family: Tahoma, sans-serif;
+            font-size: 2.5rem;
+            color: #1e90ff;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            color: #1e90ff;
+            cursor: pointer;
+            padding: 5px 15px;
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
+            transform: rotate(90deg) scale(1.2);
+        }
+
+        .content-body {
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.8;
+            font-size: 1.2rem;
+        }
+
+        .letter-content, .poem-content, .notes-content {
+            white-space: pre-line;
+            text-align: justify;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .poem-content {
+            font-style: italic;
+            text-align: center;
+            font-size: 1.3rem;
+        }
+
+        /* Notes section styling */
+        .notes-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .note-btn {
+            padding: 18px 25px;
+            background: linear-gradient(135deg, #ff9ec0 0%, #ff6b9d 100%);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 5px 15px rgba(255, 107, 157, 0.3);
+            text-align: left;
+            font-family: Tahoma, sans-serif;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .note-btn:hover {
+            transform: translateX(10px);
+            box-shadow: 0 8px 20px rgba(255, 107, 157, 0.4);
+        }
+
+        .note-btn::after {
+            content: '→';
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            transition: all 0.3s ease;
+        }
+
+        .note-btn.active::after {
+            transform: translateY(-50%) rotate(90deg);
+        }
+
+        .note-content {
+            max-height: 0;
+            overflow: hidden;
+            padding: 0 20px;
+            background: rgba(255, 235, 240, 0.7);
+            border-radius: 10px;
+            margin-top: 5px;
+            transition: all 0.5s ease;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .note-content.active {
+            max-height: 500px;
+            padding: 20px;
+            margin-bottom: 15px;
+            animation: slideDown 0.5s ease-out;
+        }
+
+        .gallery-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .gallery-item {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            transition: all 0.4s ease;
+            height: 250px;
+            position: relative;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05) rotate(2deg);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
+        }
+
+        .gallery-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(255,255,255,0.1), transparent);
+            z-index: 1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item:hover::before {
+            opacity: 1;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from { 
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideDown {
+            from { 
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .buttons-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .content-body {
+                font-size: 1.1rem;
+            }
+            
+            .content-btn, .note-btn {
+                font-size: 1.2rem;
+                padding: 20px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background pattern -->
+    <div class="bg-pattern"></div>
+    
+    <!-- Falling hearts container - NOW WORKS ON ALL PAGES -->
+    <div class="hearts" id="hearts-container"></div>
+
+    <!-- Welcome Page -->
+    <div class="page" id="welcome-page">
+        <div class="welcome-content">
+            <h1>WELCOME MY LOVE</h1>
+            <p>ENJOY YOUR STAY, IT'S BEEN A MONTH ALREADY</p>
+            <button class="btn" id="start-btn">Start Our Journey</button>
+        </div>
+    </div>
+
+    <!-- Main Page -->
+    <div class="page hidden" id="main-page">
+        <div class="header">
+            <h2>Our 1 Month Anniversary</h2>
+            <p>Celebrating every moment with you</p>
+        </div>
+        
+        <div class="buttons-container">
+            <button class="content-btn" data-target="letter">
+                <i>💌</i> A LETTER FOR YOU
+            </button>
+            <button class="content-btn" data-target="poem">
+                <i>📜</i> POEM FOR YOU
+            </button>
+            <button class="content-btn" data-target="notes">
+                <i>📝</i> NOTES FOR YOU
+            </button>
+            <button class="content-btn" data-target="gallery">
+                <i>🖼️</i> GALLERY OF US
+            </button>
+        </div>
+    </div>
+
+    <!-- Letter Section -->
+    <div class="content-section" id="letter-section">
+        <div class="content-header">
+            <h3>A LETTER FOR YOU</h3>
+            <button class="close-btn">&times;</button>
+        </div>
+        <div class="content-body letter-content">
+Hey Cutie 😘,
+
+I've been sitting here thinking about you 💭, and somehow every word I try to write feels too small for what I feel inside 💞. Still, I'll try — because you deserve to know just how much you mean to me 💖, how deeply you've touched my heart ❤️, and how endlessly grateful I am to have you in my life 🙏🏽.
+
+You came into my world quietly 🌙, almost unexpectedly 💫, and everything began to change in ways I didn't even realize at first. You didn't just capture my attention 👀 — you captured my soul 💘. You've become my favorite thought in the morning 🌅, my calm at night 🌌, and the reason I find beauty in ordinary moments 🌻. There's something about your presence that makes the world feel softer, safer, and more meaningful 🌍✨.
+
+Every time I hear your voice 🎶, it feels like a melody that never fails to calm my restless mind 😌. Every time you smile 😊, it's like sunlight breaking through clouds ☀️🌤️ — the kind that warms you from the inside. And when I look into your eyes 👁️👁️, I see home 🏡. Not a place, but a feeling — one I never want to lose 💞.
+
+You've shown me what love truly means 💕 — not just the butterflies 🦋 and excitement 🎇, but the peace 🕊️, the comfort 🤗, and the trust 🤝 that comes with it. You've taught me that love isn't about perfection, but about choosing each other again and again ♾️, no matter what. You make me want to be a better person — for you, for us, for the kind of future I dream of sharing with you 💍✨.
+
+There are nights 🌙 when I lie awake thinking about all the things I want to do with you 💭 — the places I want us to go ✈️🏝️, the memories we'll create 📸, the laughter we'll share 😂. I want to be there for every chapter of your life 📖: through your happiest days 🌞 and even your hardest ones 🌧️. I want to be the one you can always lean on 🤍, the one who listens when you need to talk 🗣️, the one who reminds you how amazing you are when you start to forget 🌹.
+
+You're not just someone I love 💗 — you're someone I admire 🌺. The strength in you 💪🏽, the kindness in your heart 💝, the way you care for others even when you're tired yourself 🫶🏽 — it all inspires me ✨. You're beautiful beyond words 😍, and I don't just mean on the outside 💃🏽. It's the way you think 💭, the way you laugh 😄, the way you love 💌 — it all radiates from within 🌟.
+
+Sometimes I catch myself smiling for no reason 😁, and then I realize — it's because of you 🥰. You live in my thoughts 🧠, in my prayers 🙏🏽, in every little wish I make 🌠. I don't know what I did to deserve you 💫, but I promise I'll never take you for granted 🤍. You are my greatest blessing 🌹, my favorite story 📖, my sweetest dream come true 💭💞.
+
+If I could give you one thing in this life 🎁, it would be the ability to see yourself through my eyes 👁️❤️ — to see just how special you are 💐, how deeply loved you are 💞, and how your presence alone makes everything better 🌈.
+
+I love you more than I can say 💗 — more than any letter could capture ✍🏽. My heart belongs to you completely 💓. I'll keep loving you through every season 🍃🌸☀️🍂, through every change 🌦️, through every moment life brings our way 🕰️.
+
+You're not just a part of my life 💞 — you are my life ❤️. And as long as I'm breathing 🌬️, you'll never have to doubt how much I love you 💕.
+
+Forever and always ♾️,
+Yusuf Abdulqudus Gbolahan 💖
+        </div>
+    </div>
+
+    <!-- Poem Section -->
+    <div class="content-section" id="poem-section">
+        <div class="content-header">
+            <h3>POEM FOR YOU</h3>
+            <button class="close-btn">&times;</button>
+        </div>
+        <div class="content-body poem-content">
+"My Heart Calls You, Ayaba Mi"
+
+Ayaba mi,
+My queen of calm and chaos,
+When you smile, even the sun stops to stare,
+And when you laugh, my heart dances bata inside my chest.
+
+You are my morning orun rere,
+My peace after long days,
+The whisper that turns my worries to wind,
+The melody my soul hums in silence.
+
+If love were ewedu, you'd be the sweet draw that binds it,
+If it were talking drum, you'd be the rhythm that calls my spirit home.
+Your name sits softly on my lips,
+Like honey from Oyo, pure and golden.
+
+Every time I see you,
+My chest says "Alhamdulillah,"
+Because how can one man deserve this much grace?
+You are my prayer answered in gentle tones.
+
+Hold my heart like adire cloth —
+Softly, carefully, with love woven through every thread.
+Let's build our forever in laughter and trust,
+Because ife wa (our love) was written in heaven's ink.
+
+Ayaba mi, ẹ ni kan ṣoṣo,
+The one who owns my heartbeat and my peace.
+May our love never fade like evening light,
+May it grow strong — bi iroko nla — standing tall through every season.
+        </div>
+    </div>
+
+    <!-- Notes Section -->
+    <div class="content-section" id="notes-section">
+        <div class="content-header">
+            <h3>NOTES FOR YOU</h3>
+            <button class="close-btn">&times;</button>
+        </div>
+        <div class="content-body">
+            <div class="notes-container" id="notes-container">
+                <!-- Notes will be dynamically added here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Gallery Section -->
+    <div class="content-section" id="gallery-section">
+        <div class="content-header">
+            <h3>GALLERY OF US</h3>
+            <button class="close-btn">&times;</button>
+        </div>
+        <div class="content-body gallery-content">
+            <!-- Images will be dynamically added here -->
+        </div>
+    </div>
+
+    <script>
+        // Create falling hearts - ENHANCED TO WORK ON ALL PAGES
+        function createHearts() {
+            const heartsContainer = document.getElementById('hearts-container');
+            const heartCount = 80; // Increased number of hearts
+            
+            for (let i = 0; i < heartCount; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                heart.innerHTML = '❤️';
+                
+                // Random position and animation
+                const left = Math.random() * 100;
+                const duration = 8 + Math.random() * 15; // Varied speeds
+                const delay = Math.random() * 10;
+                const size = 15 + Math.random() * 20; // Varied sizes
+                
+                heart.style.left = `${left}vw`;
+                heart.style.animationDuration = `${duration}s`;
+                heart.style.animationDelay = `${delay}s`;
+                heart.style.fontSize = `${size}px`;
+                
+                // Random heart colors
+                const colors = ['#ff6b9d', '#ff8fab', '#ffb3c6', '#ffccd5'];
+                const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                heart.style.color = randomColor;
+                
+                heartsContainer.appendChild(heart);
+            }
+        }
+
+        // Page navigation
+        document.getElementById('start-btn').addEventListener('click', function() {
+            document.getElementById('welcome-page').classList.add('hidden');
+            document.getElementById('main-page').classList.remove('hidden');
+        });
+
+        // Content section handling
+        const contentButtons = document.querySelectorAll('.content-btn');
+        const contentSections = document.querySelectorAll('.content-section');
+        const closeButtons = document.querySelectorAll('.close-btn');
+
+        contentButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const target = this.getAttribute('data-target');
+                
+                // Special handling for gallery to load images
+                if (target === 'gallery') {
+                    loadGalleryImages();
+                } else if (target === 'notes') {
+                    loadNotes();
+                }
+                
+                document.getElementById(`${target}-section`).classList.add('active');
+            });
+        });
+
+        closeButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                contentSections.forEach(section => {
+                    section.classList.remove('active');
+                });
+            });
+        });
+
+        // Load notes
+        function loadNotes() {
+            const notesContainer = document.getElementById('notes-container');
+            notesContainer.innerHTML = ''; // Clear existing content
+            
+            const notes = [
+                {
+                    title: "Always Smile.",
+                    content: "Your smile is magic — it lights up everything around you, even on my darkest days. Don't ever hide it; it's one of the reasons the world feels beautiful."
+                },
+                {
+                    title: "Always Take Care of Yourself.",
+                    content: "Eat well, rest, and treat yourself kindly. You deserve the same care and gentleness you give to everyone else."
+                },
+                {
+                    title: "Always Believe in Yourself.",
+                    content: "You're stronger, smarter, and more capable than you realize. Never doubt your power — I see it every day."
+                },
+                {
+                    title: "Always Laugh Freely.",
+                    content: "Let yourself laugh loud and without restraint. Your laughter is one of the purest sounds I've ever heard — it makes everything feel lighter."
+                },
+                {
+                    title: "Always Do What Makes You Happy.",
+                    content: "Whether it's dancing to your favorite song, taking long walks, or chasing your dreams — don't lose sight of what brings you joy."
+                },
+                {
+                    title: "Always Talk to Me.",
+                    content: "Whether you're happy, sad, angry, or confused — I want to be the one you can always run to. I'll listen, I'll understand, I'll stay."
+                },
+                {
+                    title: "Always Know You're Loved.",
+                    content: "Even on days you feel alone or unsure, remember — my heart beats for you. You're loved beyond measure, always."
+                },
+                {
+                    title: "Always Be Yourself.",
+                    content: "Don't change for anyone. The world deserves the real you — the kind, strong, soft, amazing woman that I fell in love with."
+                },
+                {
+                    title: "Always Dream Big.",
+                    content: "The world is yours to conquer. I'll be right behind you, cheering for you, proud of you, always."
+                },
+                {
+                    title: "Always Remember You're My Heart.",
+                    content: "No matter where life takes us, you'll always be my peace, my reason, my everything."
+                }
+            ];
+            
+            notes.forEach((note, index) => {
+                const noteElement = document.createElement('div');
+                
+                const noteButton = document.createElement('button');
+                noteButton.classList.add('note-btn');
+                noteButton.textContent = note.title;
+                noteButton.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    const content = this.nextElementSibling;
+                    content.classList.toggle('active');
+                });
+                
+                const noteContent = document.createElement('div');
+                noteContent.classList.add('note-content');
+                noteContent.textContent = note.content;
+                
+                noteElement.appendChild(noteButton);
+                noteElement.appendChild(noteContent);
+                notesContainer.appendChild(noteElement);
+            });
+        }
+
+        // Load gallery images
+        function loadGalleryImages() {
+            const galleryContent = document.querySelector('.gallery-content');
+            galleryContent.innerHTML = ''; // Clear existing content
+            
+            const imageUrls = [
+                'https://i.postimg.cc/sM4p2MGS/1760650896318.jpg',
+                'https://i.postimg.cc/68Xrwrqn/20251017-151438.jpg',
+                'https://i.postimg.cc/bZ9QvZS2/IMG-20251016-WA0032.jpg',
+                'https://i.postimg.cc/jD4zjDn7/IMG-20251016-WA0036.jpg',
+                'https://i.postimg.cc/MvWZSXxJ/IMG-20250930-WA0025.jpg',
+                'https://i.postimg.cc/PPtfjNHg/IMG-20250930-WA0026.jpg',
+                'https://i.postimg.cc/QHXN3VDv/IMG-20250930-WA0027.jpg',
+                'https://i.postimg.cc/K47cwB6s/IMG-20250930-WA0028.jpg',
+                'https://i.postimg.cc/8j1kSsG0/IMG-20250930-WA0030.jpg',
+                'https://i.postimg.cc/G3FtXsC6/Screenshot-20250309-114737-1.jpg'
+            ];
+            
+            imageUrls.forEach(url => {
+                const galleryItem = document.createElement('div');
+                galleryItem.classList.add('gallery-item');
+                
+                const img = document.createElement('img');
+                img.src = url;
+                img.alt = 'Our Memory';
+                
+                galleryItem.appendChild(img);
+                galleryContent.appendChild(galleryItem);
+            });
+        }
+
+        // Initialize the page
+        createHearts();
+    </script>
+</body>
+</html>        .btn {
             padding: 15px 40px;
             font-size: 1.2rem;
             background: white;
